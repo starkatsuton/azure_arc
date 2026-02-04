@@ -141,7 +141,7 @@ Install-Module -Name Microsoft.PowerShell.PSResourceGet -Force
 $modules = @("Az", "Az.ConnectedMachine", "Azure.Arc.Jumpstart.Common", "Azure.Arc.Jumpstart.LocalBox", "Microsoft.PowerShell.SecretManagement", "Pester")
 
 foreach ($module in $modules) {
-    Install-PSResource -Name $module -Scope AllUsers -Quiet -AcceptLicense -TrustRepository
+    Install-Module -Name $module -Scope AllUsers -Repository PSGallery -Force -AcceptLicense
 }
 
 Connect-AzAccount -Identity
