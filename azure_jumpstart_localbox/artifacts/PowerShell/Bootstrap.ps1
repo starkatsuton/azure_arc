@@ -138,16 +138,12 @@ Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Write-Host "Installing PowerShell modules..."
 
 Install-Module -Name Microsoft.PowerShell.PSResourceGet -Force
+$modules = @("Az.ConnectedMachine", "Azure.Arc.Jumpstart.Common", "Azure.Arc.Jumpstart.LocalBox", "Microsoft.PowerShell.SecretManagement", "Pester")
 
-Install-Module -Name PowerShellGet -Force -AllowClobber
-
-Remove-Module PowerShellGet -Force -ErrorAction SilentlyContinue
-Import-Module PowerShellGet -Force
-
-$modules = @("Az", "Az.ConnectedMachine", "Azure.Arc.Jumpstart.Common", "Azure.Arc.Jumpstart.LocalBox", "Microsoft.PowerShell.SecretManagement", "Pester")
+Install-PSResource -Name "Az" -Scope AllUsers -Version "15.1.0" -Quiet -AcceptLicense -TrustRepository -Reinstall
 
 foreach ($module in $modules) {
-    Install-Module -Name $module -Scope AllUsers -Repository PSGallery -Force -AcceptLicense
+    Install-PSResource -Name $module -Scope AllUsers -Quiet -AcceptLicense -TrustRepository
 }
 
 Connect-AzAccount -Identity
